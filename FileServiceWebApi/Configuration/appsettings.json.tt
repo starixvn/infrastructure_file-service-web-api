@@ -1,0 +1,36 @@
+﻿<#@ output extension=".txt" 
+#><#@ include file="_SaveOutput.tt" 
+#><#@ include file="_Environment.ttinclude" 
+#><#
+    foreach(var config in configs)    
+	{
+        var fileName = string.Format("appsettings.{0}.json", config.Environment);
+		GenerateFile(config);
+		SaveOutput(fileName);
+    }    
+
+	var currentDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    File.Copy(currentDirectory + "\\appsettings.DEV.json", currentDirectory + "\\..\\appsettings.json", true);
+#>
+<#+
+	void GenerateFile(Config config)
+	{
+#>
+{
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  },
+  "ServerInfo": {
+    "UserName": "<#=config.ServerInfoUserName#>",
+    "Password": "<#=config.ServerInfoPassword#>",
+    "Path": "<#=config.ServerInfoPath#>"
+  }
+}
+<#+ 
+	}
+#>
