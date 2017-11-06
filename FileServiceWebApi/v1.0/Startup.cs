@@ -41,7 +41,8 @@ namespace FileServiceWebApi
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
-            services.Configure<ServerInfo>(Configuration.GetSection("ServerInfo"));
+            services.Configure<ServerWrite>(Configuration.GetSection("ServerWrite"));
+            services.Configure<ServerRead>(Configuration.GetSection("ServerRead"));
             services.AddTransient<FileService, FileServiceImp>();
             services.AddMvc();
 

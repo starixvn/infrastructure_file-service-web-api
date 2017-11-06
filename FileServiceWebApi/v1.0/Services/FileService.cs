@@ -17,12 +17,20 @@ namespace FileServiceWebApi.Services
 
     public class FileServiceImp : FileService
     {
-        private readonly IOptions<ServerInfo> serverInfo;
+        private readonly IOptions<ServerWrite> serverWrite;
+        private readonly IOptions<ServerRead> serverRead;
+        private static string _password;
 
-        public FileServiceImp(IOptions<ServerInfo> serverInfo)
+        public FileServiceImp(
+            IOptions<ServerWrite> serverWrite,
+            IOptions<ServerRead> serverRead)
         {
-            this.serverInfo = serverInfo;
+            this.serverWrite = serverWrite;
+            this.serverRead = serverRead;
+            _password = CryptographyEncoding.CfsDeCrypt(serverRead.Value.Password);
         }
+
+        private static string Password { get { return _password; } }
 
         public ReadResult Read(PathFile path)
         {
@@ -52,34 +60,11 @@ namespace FileServiceWebApi.Services
             };
         }
 
-        public ReadResult DownloadFile(PathFile path)
-        {
-            try
-            {
-                var networkCredential = new NetworkCredential(serverInfo.Value.UserName, serverInfo.Value.Password);
-                using (new NetworkConnection(serverInfo.Value.Path, networkCredential))
-                {
-                    return ReadFile(path);
-                }
-            }
-            catch (Exception exception)
-            {
-                return new ReadResult
-                {
-                    Result = new Result { ErrorCode = 1, Message = exception.Message }
-                };
-            }
-        }
-
         public Result Write(SavedFile file)
         {
             try
             {
-                var networkCredential = new NetworkCredential(serverInfo.Value.UserName, serverInfo.Value.Password);
-                using (new NetworkConnection(serverInfo.Value.Path, networkCredential))
-                {
-                    File.WriteAllBytes($"{serverInfo.Value.Path}\\{file.Path}", file.Content);
-                }
+                File.WriteAllBytes($"{serverInfo.Value.Path}\\{file.Path}", file.Content);
                 return new Result { Message = "Successful" };
             }
             catch (Exception exception)
