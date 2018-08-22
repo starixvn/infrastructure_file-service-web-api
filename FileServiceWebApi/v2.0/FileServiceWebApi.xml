@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FileServiceWebApi</name>
+    </assembly>
+    <members>
+        <member name="M:FileServiceWebApi.Controllers.FilesController.Read(System.String,System.String)">
+            <summary>
+            Read a file.
+            </summary>
+        </member>
+        <member name="M:FileServiceWebApi.Controllers.FilesController.Write(FileServiceWebApi.Models.SavedFile)">
+            <summary>
+            Write a file.
+            </summary>
+        </member>
+        <member name="M:FileServiceWebApi.Controllers.FilesController.DownloadXlsx(System.String,System.String)">
+            <summary>
+            Download a xlsx file.
+            </summary>
+        </member>
+        <member name="M:FileServiceWebApi.Controllers.FilesController.DownloadXlsxSaveAs(System.String,System.String,System.String)">
+            <summary>
+            Download a xlsx file and Save As....
+            </summary>
+        </member>
+    </members>
+</doc>

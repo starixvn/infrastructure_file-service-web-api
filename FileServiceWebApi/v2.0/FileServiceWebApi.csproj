@@ -4,8 +4,15 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup>  
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PublishDocumentationFile>true</PublishDocumentationFile>
+    <PublishDependencyDocumentationFiles>true</PublishDependencyDocumentationFiles>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\netcoreapp2.0\FileServiceWebApi.xml</DocumentationFile>
+    <DocumentationFile>FileServiceWebApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
