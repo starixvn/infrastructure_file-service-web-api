@@ -1,7 +1,7 @@
+using System;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace FileServiceWebApi.App_Start
@@ -12,13 +12,13 @@ namespace FileServiceWebApi.App_Start
         {
             services.AddSwaggerGen(c =>
                 {
-                    c.SwaggerDoc("v1", new Info
+                    c.SwaggerDoc("v2.1", new Info
                     {
                         Title = "File Service Web API",
-                        Version = "v1",
+                        Version = "v2.1",
                         Description = "A simple example ASP.NET Core File Service Web API",
                     });
-                    var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                    var basePath = AppContext.BaseDirectory;
                     var xmlPath = Path.Combine(basePath, "FileServiceWebApi.xml");
                     c.IncludeXmlComments(xmlPath);
                 });
@@ -34,7 +34,7 @@ namespace FileServiceWebApi.App_Start
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "File Service Web API V1");
+                c.SwaggerEndpoint("/swagger/v2.1/swagger.json", "File Service Web API V1");
             });
 
             return app;

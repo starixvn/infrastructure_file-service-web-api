@@ -8,11 +8,11 @@ using FileServiceWebApi.Models;
 using FileServiceWebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace FileServiceWebApi
@@ -30,12 +30,11 @@ namespace FileServiceWebApi
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddApplicationInsightsTelemetry(Configuration);
             services.Configure<ServerWrite>(Configuration.GetSection("ServerWrite"));
-            services.Configure<ServerRead>(Configuration.GetSection("ServerRead"));
-            services.RegisterServices();
+            services.Configure<ServerRead>(Configuration.GetSection("ServerRead"));            
             services.AddMvc();
-
+            
+            services.RegisterServices();
             services.RegisterSwagger();
         }
 
